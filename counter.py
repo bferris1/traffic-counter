@@ -6,7 +6,7 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser(description='Vehicle counter with object detection')
-    parser.add_argument('--model', '-m', required=True, help='Path to the model file (.pt)')
+    parser.add_argument('--model', '-m', default='./models/vizdrone-small.pt', help='Path to the model file (.pt)')
     parser.add_argument('--video', '-v', required=True, help='Path to the video file')
     parser.add_argument('--show', action='store_true', help='Show video output while processing')
     
