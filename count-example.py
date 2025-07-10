@@ -80,6 +80,25 @@ def main():
             
             frame_count = 0
 
+    # Write out the last partial minute if there are any frames processed
+    if frame_count > 0:
+        current_minute += 1
+        csv_row = [current_minute]
+
+        print(f"\nMinute {current_minute} (partial):")
+        for class_name in classes:
+            class_counts = counter.classwise_counts.get(class_name, {'IN': 0, 'OUT': 0})
+            total_count = class_counts['IN'] + class_counts['OUT']
+            count_this_minute = total_count - previous_counts[class_name]
+
+            print(f"{class_name.capitalize()}: Total = {total_count}, This minute = {count_this_minute}")
+
+            csv_row.extend([total_count, count_this_minute])
+
+        with open(csv_filename, 'a', newline='') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerow(csv_row)
+
     cap.release()
     cv2.destroyAllWindows()
 
